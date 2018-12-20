@@ -9,23 +9,26 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>请登录</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}" rel="stylesheet">
-
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+    <!--th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}"-->
     <!-- Custom styles for this template -->
-    <link href="asserts/css/signin.css" th:href="@{asserts/css/signin.css}" rel="stylesheet">
+    <link href="asserts/css/signin.css" th:href="@{/asserts/css/signin.css}" rel="stylesheet">
+    <!--th:href="@{asserts/css/signin.css}"-->
 </head>
 
 <body class="text-center">
-<form class="form-signin">
-    <img class="mb-4" src="asserts/img/bootstrap-solid.svg" alt="" width="72" height="72">
+<form class="form-signin" th:action="@{login}" method="post">
+    <img class="mb-4" th:src="@{/asserts/img/bootstrap-solid.svg}" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
-    <label for="inputEmail" class="sr-only">User</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="用户名" required="" autofocus="">
+    <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+    <label for="inputUsername" class="sr-only">User</label>
+    <input type="username" name="userName" id="inputUsername" class="form-control" placeholder="用户名" required=""
+           autofocus="">
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="">
+    <input type="password" name="passWord" id="inputPassword" class="form-control" placeholder="密码" required="">
     <div class="checkbox mb-3">
         <label>
             <input type="checkbox" value="remember-me"> 记住我

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<title>AdminLTE 3 | Widgets</title>-->
+    <title th:replace="/bar/bar :: title"></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}">
+    <!--<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}">-->
+    <!--<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">-->
+    <!--integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">-->
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!--DataTables CSS-->
+    <link rel="stylesheet" href="cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link th:href="@{/css/fonts.css}" rel="stylesheet">
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/plugins/datatables/dataTables.bootstrap4.min.css}"><!-- jQuery -->
+    <!--<script src="../plugins/jquery/jquery.min.js"></script>-->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- AdminLTE App -->
+    <!--<script src="../dist/js/adminlte.min.js"></script>-->
+    <script th:src="@{/dist/js/adminlte.min.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../dist/js/demo.js"></script>
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+    <!--DataTables BootStrap-->
+    <script th:src="@{/plugins/datatables/dataTables.bootstrap4.min.js}"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav th:replace="/bar/bar :: navbar"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside th:replace="/bar/bar :: mainSidebar(activeUri='data-dictionary')"></aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>数据词典</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Data Tables</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">数据点</h3>
+                            <button style="float:right;margin-left:10px;" type="button" class="btn btn-danger"
+                                    data-toggle="modal" data-target="#modal-del">批量删除
+                            </button>
+                            <button id="add" style="float:right" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#modal-add">添加
+                            </button>
+                        </div>
+                        <!-- /.card-header -->
+                        <!--<div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>数据类型</th>
+                                    <th>寄存器</th>
+                                    <th>数值类型</th>
+                                    <th>小数位数</th>
+                                    <th>读写</th>
+                                    <th>寄存器长度</th>
+                                    <th>单位</th>
+                                    <th>公式</th>
+                                    <th>数据存储</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="model:${devs}">
+                                    <td>
+                                        <input type="checkbox" style="margin-right:10px" onclick=childclick()
+                                               name='child'>
+                                        <i class="icon-remove" style="color: red;"></i>
+                                        <i class="icon-ok" style="color: green;"></i>
+                                    </td>
+                                    <td th:text="${model.name}"></td>
+                                    <td th:text="${model.devNum}"></td>
+                                    <td th:text="${model.group}"></td>
+                                    <td>
+                                        <div class="col-sm-5" style="text-align:center">
+                                            <a class="icon-plus" style="color: green; " href="#"
+                                               data-toggle="modal" data-target="#modal-model-add"></a>
+                                            <a class="icon-pencil" style="color: blue;" href="#"
+                                               data-toggle="modal" data-target="#modal-model-edit"></a>
+                                            <a class="icon-minus" style="color: red;" href="#"
+                                               data-toggle="modal" data-target="#modal-model-del"></a>
+                                            &lt;!&ndash;<button type="button" class="btn-sm btn-primary"
+                                                    data-toggle="modal" data-target="#modal-model-add">添加点
+                                            </button>&ndash;&gt;
+                                            &lt;!&ndash;<button type="button" class="btn-sm btn-info"
+                                                    data-toggle="modal" data-target="#modal-model-edit">修改
+                                            </button>&ndash;&gt;
+                                            &lt;!&ndash;<button type="button" class="btn-sm btn-danger"
+                                                    data-toggle="modal" data-target="#modal-model-del">删除
+                                            </button>&ndash;&gt;
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>-->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input id="checkAll" style="margin-right:10px" type="checkbox">全选</th>
+                                    <th>名称</th>
+                                    <th>数据类型</th>
+                                    <th>寄存器</th>
+                                    <th>数值类型</th>
+                                    <th>小数位数</th>
+                                    <th>读写</th>
+                                    <th>寄存器长度</th>
+                                    <th>单位</th>
+                                    <th>公式</th>
+                                    <th>数据存储</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="model:${devs}">
+                                    <td>
+                                        <input type="checkbox" style="margin-right:10px" onclick=childclick()
+                                               name='child'>
+                                    </td>
+                                    <td id="name" th:value="${model.name}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td th:text="${model.group}"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a class="icon-plus" style="color: green; " href="#"
+                                           data-toggle="modal" data-target="#modal-model-add"></a>
+                                        <a class="icon-pencil" style="color: blue;" href="#"
+                                           data-toggle="modal" data-target="#modal-model-edit"></a>
+                                        <a class="icon-minus" style="color: red;" href="#"
+                                           data-toggle="modal" data-target="#modal-model-del"></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+
+    </div>
+    <!-- 请求表单，aciton需要自己绑定-->
+    <form method="post" action="#" id="form-add">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-add" aria-labelledby="modal-add-title" tabindex="-1"
+             role="dialog" aria-hidden="true">
+            <div class="modal-dialog" style="width: 1600px;margin-left:270px;">
+                <div class="modal-content" style="width: 1600px;">
+                    <div class="modal-header" style="width: 1600px;">
+                        <h4 class="modal-title" id="modal-add-title">
+                            添加数据模板
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body" style="width: 1600px;">
+                        <!--<div class="modal-body">
+                            在这里添加一些文本
+                        </div>-->
+                        <table id="example2" class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>数据类型</th>
+                                <th>寄存器</th>
+                                <th>数值类型</th>
+                                <th>小数位数</th>
+                                <th>读写</th>
+                                <th>寄存器长度</th>
+                                <th>单位</th>
+                                <th>公式</th>
+                                <th>数据存储</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>数值型</option>
+                                            <option disabled="disabled">开关型</option>
+                                            <option disabled="disabled">定位型</option>
+                                            <option disabled="disabled">字符型</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><input></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>2字节无符号整数</option>
+                                            <option>2字节有符号整数</option>
+                                            <option>4字节无符号整数(ABCD)</option>
+                                            <option>4字节无符号整数(CDAB)</option>
+                                            <option>4字节有符号整数(ABCD)</option>
+                                            <option>4字节有符号整数(CDAB)</option>
+                                            <option>4字节浮点数(ABCD)</option>
+                                            <option>4字节浮点数(CDAB)</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>只读</option>
+                                            <option disabled="disabled">读写</option>
+                                            <option disabled="disabled">只写</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><input></td>
+                                <td><input></td>
+                                <td><input></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>不存储</option>
+                                            <option disabled="disabled">存储</option>
+                                            <option disabled="disabled">变化时存储</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="nav-link" href="#">
+                                        <i class="icon-remove" style="color: red;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer" style="width: 1600px;">
+                        <button type="button" class="btn btn-info">
+                            添加数据点
+                        </button>
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <!-- /.content-wrapper -->
+
+    <form th:method="delete" method="post" action="#" id="form-del">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-del" aria-labelledby="modal-del-title" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-del-title">
+                            确定删除
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        确定要删除选中的数据模板吗？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-danger">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <form method="post" action="#" id="form-model-add">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-model-add" aria-labelledby="modal-model-add-title" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-model-add-title">
+                            添加数据点
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        按下 ESC 按钮退出。
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <form method="post" action="#" id="form-model-edit">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-model-edit" aria-labelledby="modal-model-edit-title" tabindex="-1"
+             role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-model-edit-title">
+                            数据模板名称
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        按下 ESC 按钮退出。
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <form method="post" action="#" id="form-model-del">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-model-del" aria-labelledby="modal-model-del-title" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-model-del-title">
+                            数据模板名称
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        按下 ESC 按钮退出。
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+
+</div>
+
+<footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.0.0-alpha
+    </div>
+    <strong>Copyright &copy; 2014-2018 <a href="#">AdminLTE.io</a>.</strong> All rights
+    reserved.
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+<script>
+    $(function () {
+        $('#example1').DataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                },
+            },
+            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 4]}],
+            "sorting": [1, "asc"]
+        });
+        $('#example2').DataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+            },
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            'iDisplayLength': 10
+        });
+    });
+    $('#checkAll').on('click', function () {
+        if (this.checked) {
+            $(this).attr('checked', 'checked')
+            $("input[name='child']").each(function () {
+                this.checked = true;
+            });
+        } else {
+            $(this).removeAttr('checked')
+            $("input[name='child']").each(function () {
+                this.checked = false;
+            });
+        }
+    });
+
+    function childclick() {
+        $("input[name='child']").each(function () {
+            if (this.checked == false) {
+                $("#checkAll").prop("checked", false);
+                return false;
+            }
+            $("#checkAll").prop("checked", true);
+        });
+    }
+
+    //提交表单的方法
+    $(".addSure").click(function () {
+//        $("#form_add").submit();
+        var id = this.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+        document.getElementById(id).submit();
+    });
+</script>
+</body>
+</html>

@@ -1,210 +1,517 @@
 <!DOCTYPE html>
-<!-- saved from url=(0053)https://getbootstrap.com/docs/4.1/examples/dashboard/ -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
-
-    <title>Dashboard Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="./Dashboard_files/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}"
-          rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="./Dashboard_files/dashboard.css" th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
-    <style type="text/css">/* Chart.js */
-    @-webkit-keyframes chartjs-render-animation {
-        from {
-            opacity: 0.99
-        }
-        to {
-            opacity: 1
-        }
-    }
-
-    @keyframes chartjs-render-animation {
-        from {
-            opacity: 0.99
-        }
-        to {
-            opacity: 1
-        }
-    }
-
-    .chartjs-render-monitor {
-        -webkit-animation: chartjs-render-animation 0.001s;
-        animation: chartjs-render-animation 0.001s;
-    }</style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<title>AdminLTE 3 | Widgets</title>-->
+    <title th:replace="/bar/bar :: title"></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}">
+    <!--<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}">-->
+    <!--<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">-->
+    <!--integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">-->
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!--DataTables CSS-->
+    <link rel="stylesheet" href="cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link th:href="@{/css/fonts.css}" rel="stylesheet">
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/plugins/datatables/dataTables.bootstrap4.min.css}"><!-- jQuery -->
+    <!--<script src="../plugins/jquery/jquery.min.js"></script>-->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <!--<script src="../dist/js/adminlte.min.js"></script>-->
+    <script th:src="@{/dist/js/adminlte.min.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../dist/js/demo.js"></script>
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+    <!--DataTables BootStrap-->
+    <script th:src="@{/plugins/datatables/dataTables.bootstrap4.min.js}"></script>
 </head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav th:replace="/bar/bar :: navbar"></nav>
+    <!-- /.navbar -->
 
-<body>
-<!--引入顶部栏-->
-<div th:replace="~{bar::navbar}">
+    <!-- Main Sidebar Container -->
+    <aside th:replace="/bar/bar :: mainSidebar(activeUri='data-list')"></aside>
 
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <!--引入侧边栏-->
-            <div th:replace="~{bar::sidebar(active='data')}">
-            </div>
-        </nav>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="chartjs-size-monitor"
-                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                <div class="chartjs-size-monitor-expand"
-                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink"
-                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button class="btn btn-sm btn-outline-secondary">Share</button>
-                        <button class="btn btn-sm btn-outline-secondary">Export</button>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>数据模板</h1>
                     </div>
-                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-calendar">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        This week
-                    </button>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Data Tables</li>
+                        </ol>
+                    </div>
                 </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">模板列表</h3>
+                            <button style="float:right;margin-left:10px;" type="button" class="btn btn-danger"
+                                    data-toggle="modal" data-target="#modal-del">批量删除
+                            </button>
+                            <button id="add" style="float:right" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#modal-add">添加
+                            </button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input id="checkAll" style="margin-right:10px" type="checkbox">全选</th>
+                                    <th>模板名称</th>
+                                    <th>关联数据点</th>
+                                    <th>更新时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="model:${models}">
+                                    <td>
+                                        <input type="checkbox" style="margin-right:10px" onclick=childclick()
+                                               name='child'>
+                                    </td>
+                                    <!--<td id="name" th:value="${model.name}">
+                                        <a th:text="${model.name}" href="javascript:void(0)"
+                                           th:onclick="'javascript:select(\''+${model.name}+'\')'"
+                                           th:action="@{/data/dictionary}">
+                                        </a>
+                                    </td>-->
+                                    <td id="name" th:value="${model.modelName}">
+                                        <a th:text="${model.modelName}" th:href="@{/data/dictionary/}+${model.id}">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:text="${model.relationCount}"
+                                           th:href="@{/data/dictionary/}+${model.id}"></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <div class="col-sm-5" style="text-align:center">
+                                            <button type="button" class="btn-sm btn-primary"
+                                                    data-toggle="modal" data-target="#modal-model-add"
+                                            name="model.id" th:value="${model.id}">添加点
+                                            </button>
+                                            <button type="button" class="btn-sm btn-info"
+                                                    data-toggle="modal" data-target="#modal-model-edit">修改
+                                            </button>
+                                            <button type="button" class="btn-sm btn-danger"
+                                                    data-toggle="modal" data-target="#modal-model-del">删除
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
             </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
 
-            <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="1138" height="480"
-                    style="display: block; width: 1138px; height: 480px;"></canvas>
-
-            <!--<h2>Section title</h2>-->
-            <!--<div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox">
-                        </th>
-                        <th>状态</th>
-                        <th>名称</th>
-                        <th>设备编号</th>
-                        <th>所属分组</th>
-                        <th>设备类型</th>
-                        <th>通讯协议</th>
-                        <th>采集频率</th>
-                        <th>所属用户</th>
-                        <th>修改时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>
-                            <input type="checkbox">
-                        </th>
-                        <td>Tanmay</td>
-                        <td>Bangalore</td>
-                        <td>560001</td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <input type="checkbox">
-                        </th>
-                        <td>Sachin</td>
-                        <td>Mumbai</td>
-                        <td>400003</td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <input type="checkbox">
-                        </th>
-                        <td>Uma</td>
-                        <td>Pune</td>
-                        <td>411027</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>-->
-        </main>
     </div>
+    <!-- 请求表单，aciton需要自己绑定-->
+    <form method="post" th:action="@{/data/addPoint}" id="form-add">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-model-add" aria-labelledby="modal-add-title" tabindex="-1"
+             role="dialog" aria-hidden="true">
+            <div class="modal-dialog" style="width: 1600px;margin-left:270px;">
+                <div class="modal-content" style="width: 1600px;">
+                    <div class="modal-header" style="width: 1600px;">
+                        <h4 class="modal-title" id="modal-add-title">
+                            添加数据点
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body" style="width: 1600px;">
+                        <!--<div class="modal-body">
+                            在这里添加一些文本
+                        </div>-->
+                        <table id="example2" class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>数据类型</th>
+                                <th>寄存器</th>
+                                <th>数值类型</th>
+                                <th>小数位数</th>
+                                <th>读写</th>
+                                <th>寄存器长度</th>
+                                <th>单位</th>
+                                <th>公式</th>
+                                <th>数据存储</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input name="pointName"></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" name="dataType">
+                                            <option>数值型</option>
+                                            <option disabled="disabled">开关型</option>
+                                            <option disabled="disabled">定位型</option>
+                                            <option disabled="disabled">字符型</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><input name="registerAdr"></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" name="valueType">
+                                            <option>2字节无符号整数</option>
+                                            <option>2字节有符号整数</option>
+                                            <option>4字节无符号整数(ABCD)</option>
+                                            <option>4字节无符号整数(CDAB)</option>
+                                            <option>4字节有符号整数(ABCD)</option>
+                                            <option>4字节有符号整数(CDAB)</option>
+                                            <option>4字节浮点数(ABCD)</option>
+                                            <option>4字节浮点数(CDAB)</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" name="decimalLen">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" name="readType">
+                                            <option>只读</option>
+                                            <option disabled="disabled">读写</option>
+                                            <option disabled="disabled">只写</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><input name="registerLen"></td>
+                                <td><input name="unit"></td>
+                                <td><input name="formula"></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" name="storageType">
+                                            <option>不存储</option>
+                                            <option disabled="disabled">存储</option>
+                                            <option disabled="disabled">变化时存储</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="nav-link" href="#">
+                                        <i class="icon-remove" style="color: red;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer" style="width: 1600px;">
+                        <button type="button" class="btn btn-info">
+                            添加数据点
+                        </button>
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <!-- /.content-wrapper -->
+
+    <form th:method="delete" method="post" action="#" id="form-del">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-del" aria-labelledby="modal-del-title" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-del-title">
+                            确定删除
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        确定要删除选中的数据模板吗？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-danger">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <form method="post" th:action="@{/data/list}" id="form-model-add">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-add" aria-labelledby="modal-model-add-title" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-model-add-title">
+                            添加数据模板
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">数据模板名称</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="modelName" class="form-control" id="inputEmail3"
+                                       placeholder="数据模板名称">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <form method="post" action="#" id="form-model-edit">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-model-edit" aria-labelledby="modal-model-edit-title" tabindex="-1"
+             role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-model-edit-title">
+                            数据模板名称
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        按下 ESC 按钮退出。
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+    <form method="post" action="#" id="form-model-del">
+        <!-- modal-add -->
+        <div class="modal fade" id="modal-model-del" aria-labelledby="modal-model-del-title" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-model-del-title">
+                            数据模板名称
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">x
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        按下 ESC 按钮退出。
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="addSure btn btn-primary">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-add -->
+    </form>
+
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="./Dashboard_files/jquery-3.3.1.slim.min.js" th:src="@{asserts/js/jquery-3.3.1.slim.min.js}"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="asserts/js/jquery-3.3.1.slim.min.js"><\/script>')</script>
-<script src="./Dashboard_files/popper.min.js" th:src="@{asserts/css/popper.min.js}"></script>
-<script src="./Dashboard_files/bootstrap.min.js" th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>
+<footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.0.0-alpha
+    </div>
+    <strong>Copyright &copy; 2014-2018 <a href="#">AdminLTE.io</a>.</strong> All rights
+    reserved.
+</footer>
 
-<!-- Icons -->
-<script src="./Dashboard_files/feather.min.js" th:src="@{asserts/css/feather.min.js}"></script>
-<script>
-    feather.replace()
-</script>
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 
-<!-- Graphs -->
-<script src="./Dashboard_files/Chart.min.js" th:src="@{asserts/js/Chart.min.js}"></script>
+
 <script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                datasets: [{
-                    label: "第一条",
-                    data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                    lineTension: 0,
-                    backgroundColor: 'transparent',
-                    borderColor: '#007bff',
-                    borderWidth: 4,
-                    pointBackgroundColor: '#007bff'
+    $(function () {
+        $('#example1').DataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
                 },
-                    {
-                        label: "第二条",
-                        data: [15339, 15339, 15339, 15339, 15339, 15339, 15339],
-                        lineTension: 0,
-                        backgroundColor: 'transparent',
-                        borderColor: '#007bff',
-                        borderWidth: 4,
-                        pointBackgroundColor: '#007bff'
-                    }
-                ]
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                },
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: false
-                        }
-                    }]
-                }
-                ,
-                legend: {
-                    display: false,
+            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 4]}],
+            "sorting": [1, "asc"]
+        });
+        $('#example2').DataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+            },
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            'iDisplayLength': 10
+        });
+    });
+    $('#checkAll').on('click', function () {
+        if (this.checked) {
+            $(this).attr('checked', 'checked')
+            $("input[name='child']").each(function () {
+                this.checked = true;
+            });
+        } else {
+            $(this).removeAttr('checked')
+            $("input[name='child']").each(function () {
+                this.checked = false;
+            });
+        }
+    });
+
+    function childclick() {
+        $("input[name='child']").each(function () {
+            if (this.checked == false) {
+                $("#checkAll").prop("checked", false);
+                return false;
+            }
+            $("#checkAll").prop("checked", true);
+        });
+    }
+
+    //提交表单的方法
+    $(".addSure").click(function () {
+//        $("#form_add").submit();
+        var id = this.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+        document.getElementById(id).submit();
+    });
+
+    function select(id) {
+        var url = $(this).attr("action");
+        $.ajax({
+                url: url,
+                type: "get",
+                dataType: "json",
+                data: {"id": id},
+                success: function (result) {
+                    alert(result);
+                },
+                error: function (xhr, status, p3, p4) {
+                    var err = "Error " + " " + status + " " + p3;
+                    if (xhr.responseText && xhr.responseText[0] == "{")
+                        err = JSON.parse(xhr.responseText).message;
+                    alert(err);
                 }
             }
-        })
-    ;
+        )
+    }
+
 </script>
-
-
 </body>
 </html>

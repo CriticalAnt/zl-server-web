@@ -1,2 +1,19 @@
 thymeleaf:
   cach: false
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zl-server?characterEncoding=UTF-8
+    username: root
+    password:
+#    # 静态文件请求匹配方式
+#  mvc:
+#    static-path-pattern: /**
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+#  config-location:
+  mapper-locations: classpath:mapper/*.xml
+  #实体类路径
+  type-aliases-package: com.zl.server.bean
